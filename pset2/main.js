@@ -69,3 +69,49 @@ const playlist = {
     }
   ]
 };
+
+
+let input = document.querySelector('.js-input');
+
+
+const render = (arr) => {
+  
+  //display playlist name
+  let playlistName = document.querySelector('.js-playlistName');
+  playlistName.innerText = playlist.name;
+  //display playlist description
+  let playlistDesc = document.querySelector('.js-playlistDesc');
+  playlistDesc.innerText = playlist.description;
+  //display full playlist
+  let songList = document.querySelector('.js-songList');
+  let songs = '';
+
+  for (let i = 0; i < arr.length; i++){
+    songs += `<div class='row mb-2'>
+                <div class='col-1'>
+                  <img src="${arr[i].image}" class="rounded" style='width: 50px; height: 50px;'>
+                </div>
+                <div class='col-11'>
+                  <p class='mb-0 mt-1 song-name'>${arr[i].name}</p>
+                  <p class='my-0 song-artists'>${arr[i].artists}</p>
+                </div>
+              </div>` 
+  }
+ 
+  songList.innerHTML = songs;
+}
+
+render(playlist.songs);
+
+
+
+input.addEventListener('input', e => {
+  let newArr = []
+  for (let i = 0; i < playlist.songs.length; i++) {
+    if (playlist.songs[i].name.toLocaleLowerCase().includes(e.target.value.toLocaleLowerCase())) {
+      newArr.push(playlist.songs[i])
+    }
+  }
+  render(newArr);
+});
+
